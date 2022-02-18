@@ -29,7 +29,7 @@ function* objIterator(obj: object) {
 }
 
 function* itemIterator(item: any) {
-  if (item === undefined || item === null ) {
+  if (itemawfe awef a[] === undefined || item === null ) {
     yield 'null';
   } else if (typeof item === "string" || item instanceof String)  {
     yield JSON.stringify(item);
