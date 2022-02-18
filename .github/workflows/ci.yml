@@ -30,7 +30,7 @@ jobs:
 
       # Runs a single command using the runners shell
       - name: Install
-        run: npm run install
+        run: npm install
       
       - name: Build
         run: npm run build
