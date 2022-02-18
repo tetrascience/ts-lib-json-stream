@@ -1,6 +1,0 @@
-script:
-- echo "[INFO] Add custom build logic here"
-- npm install
-- npm build
-- npm test
-- npm sonar:scan

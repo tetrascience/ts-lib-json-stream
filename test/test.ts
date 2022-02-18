@@ -17,12 +17,18 @@ async function streamToString(stream: any) {
 }
 
 
-describe('Container utils', async function() {
+
+
+describe('Container utils', function() {
+    this.timeout(60 * 1000);
+
     it('handles', async function() {
-        fs.readdirSync(SAMPLEDIR).forEach(async (file) => {
-            const originalJson = JSON.parse(fs.readFileSync(SAMPLEDIR+'/'+file, 'utf8'));
-            const newJson = await streamToString(jsonStringifyStream(originalJson));
+        const files = fs.readdirSync(SAMPLEDIR);
+        for(const f of files) {
+            console.log("Testing file: " + f);
+            const originalJson = JSON.parse(fs.readFileSync(SAMPLEDIR+'/'+f, 'utf8'));
+            const newJson = JSON.parse(await streamToString(jsonStringifyStream(originalJson)));
             expect(newJson).to.deep.equal(originalJson);
-        });
+        }
     })
 })
