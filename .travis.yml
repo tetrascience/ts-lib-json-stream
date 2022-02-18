@@ -1,0 +1,12 @@
+version: ~> 1.0
+dist: focal
+language: node_js
+node_js:
+- '12'
+
+# safelist
+branches:
+  only:
+  - main
+
+- source: .travis/custom.yml
