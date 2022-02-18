@@ -1,6 +1,6 @@
 {
   "name": "ts-lib-json-stream",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "JSON streaming library",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
