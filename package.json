@@ -10,7 +10,7 @@
     "test:cov": "nyc ts-mocha --exit --type-check --recursive test --extension ts"
   },
   "author": "Tetrascience",
-  "license": "UNLICENSED",
+  "license": "MIT",
   "devDependencies": {
     "@types/chai": "^4.3.0",
     "@types/mocha": "^9.1.0",
