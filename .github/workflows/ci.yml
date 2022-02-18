@@ -28,6 +28,9 @@ jobs:
         with:
           node-version: '12'
 
+      - name: setup
+        run: npm install -g npm@latest
+
       # Runs a single command using the runners shell
       - name: Install
         run: npm install
