@@ -1,7 +1,7 @@
 ts-lib-json-stream
 ==================
 
-Simple Library to stringify JSON using streamside
+Simple Library to stringify JSON using streams
 
 # To build and install
 
