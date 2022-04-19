@@ -1,5 +1,4 @@
 import { jsonStringifyStream } from '../index';
-import { expect } from 'chai';
 import * as fs from 'fs';
 
 const SAMPLEDIR='test/samples';
@@ -16,19 +15,16 @@ async function streamToString(stream: any) {
     return Buffer.concat(chunks).toString("utf-8");
 }
 
+describe('Container utils', () => {
+    jest.setTimeout(60 * 1000);
 
-
-
-describe('Container utils', function() {
-    this.timeout(60 * 1000);
-
-    it('handles', async function() {
+    it('handles', async () => {
         const files = fs.readdirSync(SAMPLEDIR);
         for(const f of files) {
             console.log("Testing file: " + f);
             const originalJson = JSON.parse(fs.readFileSync(SAMPLEDIR+'/'+f, 'utf8'));
             const newJson = JSON.parse(await streamToString(jsonStringifyStream(originalJson)));
-            expect(newJson).to.deep.equal(originalJson);
+            expect(newJson).toEqual(originalJson);
         }
     })
 })
