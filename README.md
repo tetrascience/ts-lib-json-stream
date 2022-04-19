@@ -8,19 +8,19 @@ Simple Library to stringify JSON using streams
 Install dependencies:
 
 ``` sh
-npm install
+yarn install
 ```
 
 To build:
 
 ``` sh
-npm run build
+yarn run build
 ```
 
 To test:
 
 ``` sh
-npm run test:cov
+yarn run test
 ```
 
 
