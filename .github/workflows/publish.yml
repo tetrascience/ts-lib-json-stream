@@ -50,3 +50,4 @@ jobs:
       - name: Publish package
         #if: steps.match-version.PACKAGE_VERSION == steps.match-version.TAG_VERSION
         run: yarn npm publish
+        
