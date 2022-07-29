@@ -1,7 +1,6 @@
 name: Publish
 
 on:
-  pull_request:
   push:
     tags: '*'
 
@@ -36,11 +35,11 @@ jobs:
         if: ${{ inputs.run_tests }}
         run: yarn test
 
-      # - name: match-tag-to-package-version
-      #   id: match-version
-      #   uses: geritol/match-tag-to-package-version@0.2.0
-      #   with:
-      #     TAG_PREFIX: v
+      - name: match-tag-to-package-version
+        id: match-version
+        uses: geritol/match-tag-to-package-version@0.2.0
+        with:
+          TAG_PREFIX: v
 
       - name: Configure JFrog Artifactory (Publish)
         run: |
@@ -48,6 +47,5 @@ jobs:
           echo "npmRegistryServer: ${{ secrets.JFROG_ARTIFACTORY_DATA_PIPELINES_URL }}" >> .yarnrc.yml
 
       - name: Publish package
-        #if: steps.match-version.PACKAGE_VERSION == steps.match-version.TAG_VERSION
+        if: steps.match-version.PACKAGE_VERSION == steps.match-version.TAG_VERSION
         run: yarn npm publish
-        
