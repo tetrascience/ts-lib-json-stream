@@ -1,0 +1,51 @@
+name: Publish
+
+on:
+  push:
+    tags: '*'
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 16
+
+      - name: Configure JFrog Artifactory
+        run: |
+          echo "npmRegistryServer: ${{ secrets.JFROG_ARTIFACTORY_NPM_VIRTUAL_URL }}" >> .yarnrc.yml
+          echo "npmAuthIdent: ${{ secrets.JFROG_ARTIFACTORY_DATA_PIPELINES_NPM_AUTH }}" >> .yarnrc.yml
+          echo "npmAlwaysAuth: true" >> .yarnrc.yml
+
+      - run: yarn install --immutable
+
+      - name: Check if Typescript
+        id: check_typescript
+        uses: andstor/file-existence-action@v1
+        with:
+          files: "tsconfig.json"
+
+      - name: yarn build
+        if: steps.check_typescript.outputs.files_exists == 'true'
+        run: yarn build
+
+      - name: yarn test
+        if: ${{ inputs.run_tests }}
+        run: yarn test
+
+      - name: match-tag-to-package-version
+        id: match-version
+        uses: geritol/match-tag-to-package-version@0.2.0
+        with:
+          TAG_PREFIX: v
+
+      - name: Configure JFrog Artifactory (Publish)
+        run: |
+          sed -i "s/npmRegistryServer: .*//g" .yarnrc.yml
+          echo "npmRegistryServer: ${{ secrets.JFROG_ARTIFACTORY_DATA_PIPELINES_URL }}" >> .yarnrc.yml
+
+      - name: Publish package
+        if: steps.match-version.PACKAGE_VERSION == steps.match-version.TAG_VERSION
+        run: yarn npm publish
